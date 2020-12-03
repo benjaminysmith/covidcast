@@ -5,21 +5,19 @@ date: "`r format(Sys.time(), '%B %d, %Y')`"
 output:
   html_document:
     code_folding: hide
+params:
+  source: "fb-survey"
+  signal: "raw_cli"
 ---
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+source("dashboard_functions.R")
 ```
+
 
 ## Sampling
 
 ```{r, fig.width = 7, fig.height = 5}
-library(covidcast)
-library(dplyr)
-library(ggplot2)
-
-date_scale <- scale_x_date(date_breaks = "1 month", date_minor_breaks = "1 week",
-                           date_labels = "%b %Y")
 
 df_fb1_st = covidcast_signal("fb-survey", "raw_cli", geo_type = "state")
 n_per_day = df_fb1_st %>% 
@@ -65,34 +63,3 @@ plot(county_totals, title = "Which counties ever appear in our CLI signals?",
                                                               legend_width = 5))
 ```
 
-## Correlation
-
-```{r, fig.width = 7, fig.height = 5}
-df_fb2 = covidcast_signal("fb-survey", "smoothed_hh_cmnty_cli")
-df_in = covidcast_signal("jhu-csse", "confirmed_7dav_incidence_prop", 
-                         start_day = min(df_fb1$time_value))
-
-case_num = 500
-geo_values = covidcast_signal("jhu-csse", "confirmed_cumulative_num",
-                              max(df_in$time_value), max(df_in$time_value)) %>%
-  filter(value >= case_num) %>% pull(geo_value)
-df_fb1_act = df_fb1 %>% filter(geo_value %in% geo_values)
-df_fb2_act = df_fb2 %>% filter(geo_value %in% geo_values)
-df_in_act = df_in %>% filter(geo_value %in% geo_values)
-
-df_cor1 = covidcast_cor(df_fb1_act, df_in_act, by = "time_value",
-                        method = "spearman")
-df_cor2 = covidcast_cor(df_fb2_act, df_in_act, by = "time_value",
-                        method = "spearman")
-
-df_cor = rbind(df_cor1, df_cor2)
-df_cor$signal = c(rep("% CLI", nrow(df_cor1)), 
-                  rep("% CLI-in-community", nrow(df_cor2)))
-ggplot(df_cor, aes(x = time_value, y = value)) + 
-  geom_line(aes(color = signal)) + 
-  labs(title = "Correlation between CLI signals and cases",
-       subtitle = sprintf("Over all counties with at least %i cases", case_num),
-       x = "Date", y = "Correlation") + theme_bw() +
-  theme(legend.position = "bottom", legend.title  = element_blank()) +
-  date_scale
-```
