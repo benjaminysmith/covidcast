@@ -14,6 +14,8 @@ params:
 source("dashboard_functions.R")
 ```
 
+# Doctor Visits
+
 ### Coverage {.tabset}
 
 #### County

@@ -1,0 +1,14 @@
+rmd_files: [
+  "index.Rmd", 
+  "cor_dashboard.Rmd", 
+  "dv_dashboard.Rmd",
+  "fb_dashboard.Rmd",
+  "ght_dashboard.Rmd",  
+  "hosp_dashboard.Rmd",  
+  "jhu_dashboard.Rmd",
+  "quidel_dashboard.Rmd",
+  "safegraph_dashboard.Rmd",
+  "usa_facts_dashboard.Rmd"
+]
+delete_merged_file: true
+new_session: true

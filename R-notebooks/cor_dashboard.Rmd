@@ -12,6 +12,8 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE, fig.width = 8,
                       fig.height = 7)
 ```
 
+# Correlations
+
 ## County analysis
 
 First, we'll look at counties. 

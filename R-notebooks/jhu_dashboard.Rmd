@@ -14,8 +14,10 @@ params:
 source("dashboard_functions.R")
 ```
 
-### Coverage {.tabset}
-#### County
+# JHU
+
+## Coverage {.tabset}
+### County
 ```{r, include = FALSE}
 df_counties = covidcast_signal(params$source,
                                params$signal,
@@ -31,7 +33,7 @@ plot_28_day_unique(df_counties, "counties")
 plot_28_day_frequency_county(df_counties)
 ```
 
-#### Metro Areas
+### Metro Areas
 
 ```{r, include = FALSE}
 df_metros = covidcast_signal(params$source,
@@ -44,6 +46,6 @@ df_metros = covidcast_signal(params$source,
 plot_28_day_unique(df_metros, "metros")
 ```
 
-#### Sample Size
+### Sample Size
 
 Not available for this signal.

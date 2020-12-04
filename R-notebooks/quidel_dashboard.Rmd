@@ -14,9 +14,11 @@ params:
 source("dashboard_functions.R")
 ```
 
-### Coverage {.tabset}
+# Quidel
 
-#### States
+## Coverage {.tabset}
+
+### States
 ```{r, include = FALSE}
 df_states = covidcast_signal(params$source,
                              params$signal,
@@ -32,7 +34,7 @@ plot_28_day_unique(df_states, "states")
 plot_28_day_frequency_state(df_states)
 ```
 
-#### Metro Areas
+### Metro Areas
 
 ```{r, include = FALSE}
 df_metros = covidcast_signal(params$source,
@@ -45,5 +47,5 @@ df_metros = covidcast_signal(params$source,
 plot_28_day_unique(df_metros, "metros")
 ```
 
-#### Samples
+### Samples
 Not available for this signal.
